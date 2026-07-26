@@ -1,0 +1,153 @@
+# 03 State Contracts And Invariants
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+state_contracts_and_invariants:
+  entities:
+    execution_block:
+      identity_fields:
+      - block_id
+      - block_name
+      - mission
+      - strategic_role
+      - priority_level
+      execution_fields:
+      - objective
+      - next_action
+      - proof_required
+      - stop_condition
+      - time_box_minutes
+      constraint_fields:
+      - ignore
+      - anti_patterns
+      - max_branching
+      - allowed_scope
+      friction_fields:
+      - soft_blockers
+      - hard_blockers
+      - fallback_action
+      - collapse_after_minutes
+      output_fields:
+      - deliverable
+      - success_metric
+      - minimum_viable_output
+      review_fields:
+      - main_learning
+      - next_run
+      - resume_point
+    block_projection:
+      fields:
+      - block_id
+      - name
+      - status
+      - payload
+      - proof
+      - updated_at
+    event:
+      fields:
+      - id
+      - block_id
+      - type
+      - payload
+      - occurred_at
+      immutability: append_only_by_application_contract
+    json_leaf:
+      fields:
+      - document_id
+      - path
+      - value_json
+      - value_type
+      - indexed_at
+  status_machine:
+    statuses:
+    - active
+    - blocked
+    - completed
+    - reviewed
+    transitions:
+    - from: absent_or_existing
+      command: start
+      to: active
+      preconditions:
+      - execution block validates
+      - no other active block exists
+    - from: active
+      command: friction_soft
+      to: active
+      preconditions:
+      - detail is non-empty
+    - from: active
+      command: friction_hard
+      to: blocked
+      preconditions:
+      - detail is non-empty
+    - from:
+      - active
+      - blocked
+      command: complete
+      to: completed
+      preconditions:
+      - proof is non-empty
+    - from: completed
+      command: review
+      to: reviewed
+      preconditions:
+      - main_learning is non-empty
+      - next_run is non-empty
+      - resume_point is non-empty
+  hard_invariants:
+  - id: one_active_block
+    rule: At most one block may have status active.
+    enforcement: SQLite partial unique index
+    status: implemented
+  - id: single_branch
+    rule: constraints.max_branching must equal 1.
+    enforcement: deterministic validation
+    status: implemented
+  - id: proof_before_completion
+    rule: Completion requires a non-empty proof string.
+    enforcement: kernel transition validation
+    status: implemented
+  - id: review_after_completion
+    rule: Review may occur only from completed state.
+    enforcement: store transition validation
+    status: implemented
+  - id: typed_json_retrieval
+    rule: Indexed leaves preserve path, value, and scalar type.
+    enforcement: json_paths flattening and persisted value_type
+    status: implemented
+  - id: ai_non_authority
+    rule: AI critique cannot update lifecycle state or execute commands.
+    enforcement: separate read-only CLI path
+    status: implemented
+  known_semantic_limitations:
+  - limitation: proof_truth_not_verified
+    meaning: The system records required proof but cannot determine whether the claim is true.
+    status: documented
+  - limitation: event_tamper_evidence_absent
+    meaning: Events are append-only by application behavior but are not cryptographically signed.
+    status: documented
+  json_path_contract:
+    root: $
+    object_key_format: $.safe_key or $['unsafe-key']
+    array_index_format: $[index]
+    preserved_types:
+    - 'null'
+    - boolean
+    - integer
+    - number
+    - string
+    - empty_object
+    - empty_array
+    document_reindex_semantics: atomic replacement of all leaves for document_id

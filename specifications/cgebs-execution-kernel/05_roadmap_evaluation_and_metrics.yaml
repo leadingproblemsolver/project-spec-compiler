@@ -1,0 +1,127 @@
+# 05 Roadmap Evaluation And Metrics
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+roadmap_evaluation_and_metrics:
+  implementation_map:
+  - capability: execution block validation
+    status: implemented
+  - capability: single active block enforcement
+    status: implemented
+  - capability: soft and hard friction recording
+    status: implemented
+  - capability: proof-gated completion
+    status: implemented
+  - capability: review and resume point
+    status: implemented
+  - capability: immutable lifecycle events
+    status: implemented
+  - capability: typed exact JSON path indexing
+    status: implemented
+  - capability: read-only OpenAI critique
+    status: implemented
+  - capability: semantic proof verification
+    status: deferred
+  - capability: multi-user remote synchronization
+    status: deferred
+  - capability: web interface
+    status: deferred
+  evolution_roadmap:
+    prototype:
+      objective: Prove one complete reviewed block.
+      exit_gate: A valid block reaches reviewed state with ordered events.
+      status: implemented
+    mvp:
+      objective: Use the kernel across real repeated execution sessions.
+      deliverables:
+      - import/export command
+      - run history summaries
+      - malformed and adversarial fixture suite
+      - real session case study
+      exit_gate: At least 20 real blocks with measurable resume and proof completeness.
+      status: planned
+    production:
+      objective: Support shared durable operation.
+      deliverables:
+      - schema migrations
+      - backup and restore
+      - authentication and authorization
+      - structured logging and metrics
+      - data retention policy
+      - operational SLOs
+      exit_gate: Failure, recovery, migration, and access behavior are reproducible.
+      status: planned
+    research_grade:
+      objective: Test whether structured execution blocks outperform unstructured run cards.
+      deliverables:
+      - controlled benchmark
+      - baseline workflow
+      - scope violation measurement
+      - resume-time study
+      - proof quality rubric
+      exit_gate: Claims survive reproducible baseline comparison.
+      status: planned
+    staff_engineer_quality:
+      objective: Demonstrate rollout, governance, evolution, and organizational tradeoffs.
+      deliverables:
+      - migration plan
+      - policy governance
+      - contention analysis
+      - multi-team adoption model
+      - long-term operating cost
+      - degraded-mode strategy
+      exit_gate: A senior reviewer can challenge operation and evolution, not only code.
+      status: planned
+  current_test_evidence:
+  - test: rejects max_branching greater than one
+    type: unit
+    status: implemented
+  - test: prevents second active block
+    type: integration
+    status: implemented
+  - test: runs full start-complete-review lifecycle
+    type: integration
+    status: implemented
+  - test: preserves integer and boolean JSON types
+    type: unit
+    status: implemented
+  - test: end-to-end smoke path
+    type: smoke
+    status: implemented
+  benchmark_design:
+    baseline: unstructured execution run card
+    sample_target: 20
+    primary_metrics:
+    - proof_completion_rate
+    - scope_violation_rate
+    - parallel_branch_violation_rate
+    - resume_time_minutes
+    - review_completeness_rate
+    - duplicated_work_rate
+    falsification_condition: If CGEBS adds material overhead without improving proof, scope control, or resumption,
+      the lifecycle contract must be reduced.
+    status: documented
+  system_metrics:
+  - transition_latency_ms
+  - failed_transition_rate
+  - database_error_rate
+  - json_index_leaves_per_second
+  - json_query_latency_ms
+  human_and_project_metrics:
+  - time_to_resume_minutes
+  - completed_blocks_with_proof_ratio
+  - reviewed_blocks_ratio
+  - scope_violation_count
+  - fallback_action_usage_rate
+  - future_work_reconstruction_avoided

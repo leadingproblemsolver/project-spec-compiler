@@ -1,0 +1,79 @@
+# 01 Problem And Value
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+problem_and_value:
+  surface_problem: Execution plans contain objectives and constraints but do not enforce them across a work session.
+  hidden_engineering_problem: Represent and enforce a lifecycle with transactional invariants, proof-gated transitions,
+    friction handling, immutable history, and exact structured retrieval.
+  failure_if_unsolved:
+  - multiple deep-execution branches become active
+  - scope expands without an explicit decision
+  - completion is declared without proof
+  - friction destroys continuity
+  - future sessions reconstruct state from memory
+  - nested JSON is flattened or retrieved imprecisely
+  why_difficult:
+  - concern: lifecycle_correctness
+    difficulty: Transitions must reject invalid ordering and partial state.
+  - concern: single_active_invariant
+    difficulty: Application checks alone are race-prone; the database must enforce the invariant.
+  - concern: evidence_semantics
+    difficulty: The runtime can require a proof record but cannot yet verify whether the proof is true.
+  - concern: state_history
+    difficulty: Operational reads need projections while audits need immutable transition history.
+  - concern: exact_structural_retrieval
+    difficulty: Nested arrays, nulls, booleans, integers, floats, and object keys must retain identity and type.
+  - concern: ai_authority_boundary
+    difficulty: Model critique can be useful but must never mutate lifecycle state or execute commands.
+  value_created:
+    immediate:
+    - one enforced execution thread
+    - auditable completion proof
+    - explicit continuation point
+    reusable:
+    - execution block schema
+    - lifecycle runtime
+    - event history
+    - exact JSON path index
+    portfolio:
+    - state-machine design
+    - transactional consistency
+    - developer tooling
+    - data lineage
+    - architectural restraint
+  explicit_non_goals:
+  - generic task manager
+  - calendar optimization
+  - autonomous task execution
+  - multi-user distributed scheduler
+  - semantic search over arbitrary documents
+  - root-cause or incident intelligence
+  - reinforcement learning
+  - microservice architecture
+  scope_boundary:
+    in_scope:
+    - CLI-driven local execution lifecycle
+    - SQLite persistence
+    - deterministic validation
+    - read-only optional OpenAI critique
+    - exact JSON leaf indexing
+    - unit tests and smoke proof
+    out_of_scope_until_evidence:
+    - remote synchronization
+    - multi-tenant authorization
+    - PostgreSQL migration
+    - distributed queues
+    - web interface
+    - tamper-evident event signatures

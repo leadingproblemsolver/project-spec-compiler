@@ -1,0 +1,61 @@
+# Portfolio Registry
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+portfolio:
+  id: reality_aligned_engineering_systems
+  name: Reality-Aligned Engineering Systems Portfolio
+  thesis: Build systems that preserve operational state, enforce evidence-backed execution, and convert external
+    signals into durable next actions.
+  selection_rule: A project qualifies only when it creates direct project progress, genuine engineering depth, measurable
+    proof, and reusable infrastructure.
+  projects:
+  - id: cgebs_execution_kernel
+    repository: cgebs-execution-kernel
+    role: constraint_governed_execution_runtime
+    primary_output: auditable execution lifecycle state
+    current_maturity: installable_vertical_slice
+    runtime_dependency_on_other_projects: false
+  - id: signalops_workbench
+    repository: signalops-workbench
+    role: channel_native_evidence_operations
+    primary_output: structured evidence, decisions, handoffs, and next actions
+    current_maturity: installable_vertical_slice
+    runtime_dependency_on_other_projects: false
+  cross_project_relationships:
+  - from: cgebs_execution_kernel
+    to: signalops_workbench
+    relationship: can_govern
+    meaning: CGEBS can constrain a SignalOps session with one objective, one scope, proof, friction policy, review,
+      and continuation point.
+    current_status: documented
+  - from: signalops_workbench
+    to: cgebs_execution_kernel
+    relationship: can_supply_evidence
+    meaning: SignalOps outcomes can become proof, learning, risk, or next-run inputs in a CGEBS review.
+    current_status: documented
+  shared_principles:
+  - deterministic authority before generative assistance
+  - explicit state over conversational memory
+  - immutable history plus operational projections
+  - real evidence separated from interpretation
+  - simple local architecture before distributed complexity
+  - measurement before optimization
+  - human approval at consequential boundaries
+  shared_non_goals:
+  - portfolio complexity added only for appearance
+  - autonomous irreversible actions
+  - unverifiable performance claims
+  - generic AI wrappers
+  - incident intelligence as a mandatory shared dependency

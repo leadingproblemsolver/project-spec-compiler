@@ -1,0 +1,57 @@
+# 00 Project Identity
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+project_identity:
+  id: cgebs_execution_kernel
+  name: CGEBS Execution Kernel
+  repository: cgebs-execution-kernel
+  package: cgebs-execution-kernel
+  python_module: cgebs
+  cli: cgebs
+  version: 0.1.0
+  current_stage: installable_vertical_slice
+  project_type:
+  - developer_tooling
+  - workflow_runtime
+  - local_first_state_system
+  - execution_control_infrastructure
+  one_liner: A deterministic execution-control kernel that turns bounded work into auditable, resumable state.
+  system_thesis: Execution constraints become reliable only when scope, lifecycle, proof, friction, and continuation
+    are enforced as machine-readable state rather than retained as prose.
+  primary_users:
+  - individual technical operators
+  - AI-assisted builders
+  - engineering leads managing bounded execution
+  - future agent runtimes requiring explicit execution contracts
+  primary_use_cases:
+  - govern one deep execution block
+  - prevent parallel deep-work branching
+  - record friction and fallback behavior
+  - require evidence before completion
+  - preserve review and exact continuation state
+  - index and retrieve exact nested JSON values
+  direct_project_benefit:
+    improves_core_user_result: true
+    removes_current_blocker: true
+    reduces_operational_risk: true
+    creates_external_proof: true
+    accelerates_validation: true
+    creates_reusable_infrastructure: true
+    explanation: The repository makes the BRAAT/CGEBS execution block contract directly executable, testable, and
+      resumable instead of leaving it as a descriptive schema.
+  source_artifacts:
+  - docs/reference/BRAAT_CGEBS.toon
+  - examples/execution_block.json
+  - schemas/execution_block.schema.json

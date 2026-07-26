@@ -1,0 +1,71 @@
+# Framework Application Contract
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+framework_application_contract:
+  purpose: Convert any target project into an employer-readable, technically mature, directly useful system.
+  mandatory_sections:
+  - project_identity
+  - problem_and_value
+  - system_architecture
+  - state_contracts_and_invariants
+  - workflows_interfaces_and_repository
+  - roadmap_evaluation_and_metrics
+  - reliability_security_and_operations
+  - portfolio_and_employer_signal
+  direct_benefit_gate:
+    required_true_count: 2
+    checks:
+    - improves_core_user_result
+    - removes_current_blocker
+    - reduces_operational_risk
+    - creates_external_proof
+    - accelerates_validation
+    - creates_reusable_infrastructure
+    kill_rule: Reject an addition when project benefit is weak and portfolio signal is its main justification.
+  implementation_truth_rule:
+    required: true
+    instruction: Every feature, metric, integration, and reliability control must state whether it is implemented,
+      partially implemented, documented, planned, or deferred.
+  vertical_slice_rule:
+    required_path:
+    - real_input
+    - durable_state
+    - core_transformation
+    - user_visible_output
+    - measured_or_reproducible_result
+    anti_pattern: building horizontal infrastructure without testing the central result
+  quality_gates:
+    reality:
+    - solves a current expensive or repeated problem
+    - creates an externally observable result
+    - changes user or operator behavior
+    engineering:
+    - contains a real technical core
+    - defines state and invariants
+    - addresses correctness, failure, and recovery
+    evaluation:
+    - has a baseline
+    - states falsifiable claims
+    - exposes uncertainty and limitations
+    - supports reproducibility
+    compounding:
+    - creates reusable artifacts
+    - reduces future work
+    - preserves knowledge across sessions
+    portfolio:
+    - makes reasoning inspectable
+    - makes implementation runnable
+    - makes evidence reproducible
+    - shows operational ownership

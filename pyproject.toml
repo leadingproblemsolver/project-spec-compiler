@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "project-spec-compiler"
+version = "1.0.0"
+description = "Compile and validate reality-aligned engineering project specifications"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+license = {text = "MIT"}
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9"]
+
+[project.scripts]
+specctl = "project_spec.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

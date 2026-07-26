@@ -1,0 +1,642 @@
+# cgebs-execution-kernel Complete Project Bundle
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+project_identity:
+  id: cgebs_execution_kernel
+  name: CGEBS Execution Kernel
+  repository: cgebs-execution-kernel
+  package: cgebs-execution-kernel
+  python_module: cgebs
+  cli: cgebs
+  version: 0.1.0
+  current_stage: installable_vertical_slice
+  project_type:
+  - developer_tooling
+  - workflow_runtime
+  - local_first_state_system
+  - execution_control_infrastructure
+  one_liner: A deterministic execution-control kernel that turns bounded work into auditable, resumable state.
+  system_thesis: Execution constraints become reliable only when scope, lifecycle, proof, friction, and continuation
+    are enforced as machine-readable state rather than retained as prose.
+  primary_users:
+  - individual technical operators
+  - AI-assisted builders
+  - engineering leads managing bounded execution
+  - future agent runtimes requiring explicit execution contracts
+  primary_use_cases:
+  - govern one deep execution block
+  - prevent parallel deep-work branching
+  - record friction and fallback behavior
+  - require evidence before completion
+  - preserve review and exact continuation state
+  - index and retrieve exact nested JSON values
+  direct_project_benefit:
+    improves_core_user_result: true
+    removes_current_blocker: true
+    reduces_operational_risk: true
+    creates_external_proof: true
+    accelerates_validation: true
+    creates_reusable_infrastructure: true
+    explanation: The repository makes the BRAAT/CGEBS execution block contract directly executable, testable, and
+      resumable instead of leaving it as a descriptive schema.
+  source_artifacts:
+  - docs/reference/BRAAT_CGEBS.toon
+  - examples/execution_block.json
+  - schemas/execution_block.schema.json
+problem_and_value:
+  surface_problem: Execution plans contain objectives and constraints but do not enforce them across a work session.
+  hidden_engineering_problem: Represent and enforce a lifecycle with transactional invariants, proof-gated transitions,
+    friction handling, immutable history, and exact structured retrieval.
+  failure_if_unsolved:
+  - multiple deep-execution branches become active
+  - scope expands without an explicit decision
+  - completion is declared without proof
+  - friction destroys continuity
+  - future sessions reconstruct state from memory
+  - nested JSON is flattened or retrieved imprecisely
+  why_difficult:
+  - concern: lifecycle_correctness
+    difficulty: Transitions must reject invalid ordering and partial state.
+  - concern: single_active_invariant
+    difficulty: Application checks alone are race-prone; the database must enforce the invariant.
+  - concern: evidence_semantics
+    difficulty: The runtime can require a proof record but cannot yet verify whether the proof is true.
+  - concern: state_history
+    difficulty: Operational reads need projections while audits need immutable transition history.
+  - concern: exact_structural_retrieval
+    difficulty: Nested arrays, nulls, booleans, integers, floats, and object keys must retain identity and type.
+  - concern: ai_authority_boundary
+    difficulty: Model critique can be useful but must never mutate lifecycle state or execute commands.
+  value_created:
+    immediate:
+    - one enforced execution thread
+    - auditable completion proof
+    - explicit continuation point
+    reusable:
+    - execution block schema
+    - lifecycle runtime
+    - event history
+    - exact JSON path index
+    portfolio:
+    - state-machine design
+    - transactional consistency
+    - developer tooling
+    - data lineage
+    - architectural restraint
+  explicit_non_goals:
+  - generic task manager
+  - calendar optimization
+  - autonomous task execution
+  - multi-user distributed scheduler
+  - semantic search over arbitrary documents
+  - root-cause or incident intelligence
+  - reinforcement learning
+  - microservice architecture
+  scope_boundary:
+    in_scope:
+    - CLI-driven local execution lifecycle
+    - SQLite persistence
+    - deterministic validation
+    - read-only optional OpenAI critique
+    - exact JSON leaf indexing
+    - unit tests and smoke proof
+    out_of_scope_until_evidence:
+    - remote synchronization
+    - multi-tenant authorization
+    - PostgreSQL migration
+    - distributed queues
+    - web interface
+    - tamper-evident event signatures
+system_architecture:
+  architecture_style: modular_monolith
+  deployment_mode: local_first_cli
+  authoritative_path:
+  - execution_block_json
+  - deterministic_validation
+  - execution_kernel_policy
+  - sqlite_transaction
+  - current_block_projection
+  - immutable_event_record
+  secondary_path:
+  - nested_json_document
+  - exact_path_flattening
+  - typed_leaf_index
+  - path_query
+  optional_advisory_path:
+  - validated_execution_block
+  - openai_responses_api
+  - read_only_critique
+  - human_review
+  source_of_truth:
+    current_state: SQLite blocks table
+    transition_history: SQLite events table
+    indexed_json: SQLite json_values table
+    configuration_contract: execution block JSON and schema
+  consistency_model:
+    local_writes: ACID transaction
+    single_active_block: database partial unique index
+    event_and_projection_update: same transaction
+    remote_consistency: not implemented
+  technology:
+    language: Python 3.11+
+    database: SQLite
+    packaging: setuptools via pyproject.toml
+    testing: unittest
+    ci: GitHub Actions
+    external_runtime_dependencies: []
+    optional_external_service: OpenAI Responses API for critique only
+  components:
+  - name: domain_kernel
+    path: src/cgebs/kernel.py
+    responsibility: validation, execution-block model, lifecycle policy
+    status: implemented
+  - name: persistence_store
+    path: src/cgebs/store.py
+    responsibility: transactions, projections, immutable events, JSON index persistence
+    status: implemented
+  - name: json_path_engine
+    path: src/cgebs/json_paths.py
+    responsibility: exact typed JSON leaf path extraction
+    status: implemented
+  - name: cli
+    path: src/cgebs/cli.py
+    responsibility: operator interface and composition root
+    status: implemented
+  - name: openai_critique_adapter
+    path: src/cgebs/openai_client.py
+    responsibility: read-only critique of proof gaps, contradictions, scope risk, and continuation precision
+    status: implemented
+  deferred_architecture:
+  - capability: PostgreSQL
+    trigger: remote concurrent writers or shared team operation
+    status: deferred
+  - capability: message_broker
+    trigger: durable asynchronous workflows with measured backlog or retry needs
+    status: deferred
+  - capability: web_ui
+    trigger: CLI usability becomes the dominant adoption constraint
+    status: deferred
+  - capability: distributed_execution
+    trigger: multiple workers must coordinate one authoritative execution plan
+    status: deferred
+state_contracts_and_invariants:
+  entities:
+    execution_block:
+      identity_fields:
+      - block_id
+      - block_name
+      - mission
+      - strategic_role
+      - priority_level
+      execution_fields:
+      - objective
+      - next_action
+      - proof_required
+      - stop_condition
+      - time_box_minutes
+      constraint_fields:
+      - ignore
+      - anti_patterns
+      - max_branching
+      - allowed_scope
+      friction_fields:
+      - soft_blockers
+      - hard_blockers
+      - fallback_action
+      - collapse_after_minutes
+      output_fields:
+      - deliverable
+      - success_metric
+      - minimum_viable_output
+      review_fields:
+      - main_learning
+      - next_run
+      - resume_point
+    block_projection:
+      fields:
+      - block_id
+      - name
+      - status
+      - payload
+      - proof
+      - updated_at
+    event:
+      fields:
+      - id
+      - block_id
+      - type
+      - payload
+      - occurred_at
+      immutability: append_only_by_application_contract
+    json_leaf:
+      fields:
+      - document_id
+      - path
+      - value_json
+      - value_type
+      - indexed_at
+  status_machine:
+    statuses:
+    - active
+    - blocked
+    - completed
+    - reviewed
+    transitions:
+    - from: absent_or_existing
+      command: start
+      to: active
+      preconditions:
+      - execution block validates
+      - no other active block exists
+    - from: active
+      command: friction_soft
+      to: active
+      preconditions:
+      - detail is non-empty
+    - from: active
+      command: friction_hard
+      to: blocked
+      preconditions:
+      - detail is non-empty
+    - from:
+      - active
+      - blocked
+      command: complete
+      to: completed
+      preconditions:
+      - proof is non-empty
+    - from: completed
+      command: review
+      to: reviewed
+      preconditions:
+      - main_learning is non-empty
+      - next_run is non-empty
+      - resume_point is non-empty
+  hard_invariants:
+  - id: one_active_block
+    rule: At most one block may have status active.
+    enforcement: SQLite partial unique index
+    status: implemented
+  - id: single_branch
+    rule: constraints.max_branching must equal 1.
+    enforcement: deterministic validation
+    status: implemented
+  - id: proof_before_completion
+    rule: Completion requires a non-empty proof string.
+    enforcement: kernel transition validation
+    status: implemented
+  - id: review_after_completion
+    rule: Review may occur only from completed state.
+    enforcement: store transition validation
+    status: implemented
+  - id: typed_json_retrieval
+    rule: Indexed leaves preserve path, value, and scalar type.
+    enforcement: json_paths flattening and persisted value_type
+    status: implemented
+  - id: ai_non_authority
+    rule: AI critique cannot update lifecycle state or execute commands.
+    enforcement: separate read-only CLI path
+    status: implemented
+  known_semantic_limitations:
+  - limitation: proof_truth_not_verified
+    meaning: The system records required proof but cannot determine whether the claim is true.
+    status: documented
+  - limitation: event_tamper_evidence_absent
+    meaning: Events are append-only by application behavior but are not cryptographically signed.
+    status: documented
+  json_path_contract:
+    root: $
+    object_key_format: $.safe_key or $['unsafe-key']
+    array_index_format: $[index]
+    preserved_types:
+    - 'null'
+    - boolean
+    - integer
+    - number
+    - string
+    - empty_object
+    - empty_array
+    document_reindex_semantics: atomic replacement of all leaves for document_id
+workflows_interfaces_and_repository:
+  primary_operator_workflow:
+  - step: 1
+    command: cgebs validate <block.json>
+    result: deterministic schema and invariant validation
+  - step: 2
+    command: cgebs start <block.json> --db <path>
+    result: active projection and started event
+  - step: 3
+    command: cgebs friction <block.json> --kind <soft|hard> --detail <text> --db <path>
+    result: friction event, fallback action, and optional blocked state
+  - step: 4
+    command: cgebs complete <block.json> --proof <text> --db <path>
+    result: completed state and proof-bearing event
+  - step: 5
+    command: cgebs review <block.json> --learning <text> --next-run <text> --resume-point <text> --db <path>
+    result: reviewed state and exact continuation record
+  - step: 6
+    command: cgebs history --db <path>
+    result: auditable ordered event history
+  json_workflow:
+  - step: 1
+    command: cgebs json-index <document.json> --document-id <id> --db <path>
+    result: typed exact-path index
+  - step: 2
+    command: cgebs json-query <path> --document-id <id> --db <path>
+    result: exact typed value retrieval
+  advisory_workflow:
+  - step: 1
+    command: cgebs critique <block.json> [--model <model>]
+    result: read-only critique printed for human review
+    environment:
+    - OPENAI_API_KEY
+    - OPENAI_MODEL optional
+  install_and_validation:
+    install: python -m pip install -e .
+    test: python -m unittest discover -s tests -v
+    smoke: python scripts/smoke_test.py
+    make_targets:
+    - make install
+    - make test
+    - make smoke
+    - make clean
+  repository_map:
+  - path: src/cgebs/
+    purpose: runtime modules
+  - path: tests/
+    purpose: invariant and integration tests
+  - path: examples/
+    purpose: valid execution and nested JSON fixtures
+  - path: schemas/
+    purpose: portable execution block JSON Schema
+  - path: docs/
+    purpose: RFC, architecture, evaluation, threats, failures, ADRs
+  - path: scripts/
+    purpose: reproducible smoke proof
+  - path: .github/
+    purpose: CI and contribution workflow
+  - path: spec/
+    purpose: canonical segmented YAML project specification
+  github_presentation:
+    default_branch: main
+    recommended_topics:
+    - developer-tools
+    - workflow-engine
+    - state-machine
+    - sqlite
+    - local-first
+    - execution-runtime
+    - data-lineage
+    read_order:
+    - README.md
+    - spec/00_project_identity.yaml
+    - docs/EMPLOYER_GUIDE.md
+    - docs/RFC.md
+    - src/cgebs/kernel.py
+    - src/cgebs/store.py
+    - tests/test_kernel.py
+roadmap_evaluation_and_metrics:
+  implementation_map:
+  - capability: execution block validation
+    status: implemented
+  - capability: single active block enforcement
+    status: implemented
+  - capability: soft and hard friction recording
+    status: implemented
+  - capability: proof-gated completion
+    status: implemented
+  - capability: review and resume point
+    status: implemented
+  - capability: immutable lifecycle events
+    status: implemented
+  - capability: typed exact JSON path indexing
+    status: implemented
+  - capability: read-only OpenAI critique
+    status: implemented
+  - capability: semantic proof verification
+    status: deferred
+  - capability: multi-user remote synchronization
+    status: deferred
+  - capability: web interface
+    status: deferred
+  evolution_roadmap:
+    prototype:
+      objective: Prove one complete reviewed block.
+      exit_gate: A valid block reaches reviewed state with ordered events.
+      status: implemented
+    mvp:
+      objective: Use the kernel across real repeated execution sessions.
+      deliverables:
+      - import/export command
+      - run history summaries
+      - malformed and adversarial fixture suite
+      - real session case study
+      exit_gate: At least 20 real blocks with measurable resume and proof completeness.
+      status: planned
+    production:
+      objective: Support shared durable operation.
+      deliverables:
+      - schema migrations
+      - backup and restore
+      - authentication and authorization
+      - structured logging and metrics
+      - data retention policy
+      - operational SLOs
+      exit_gate: Failure, recovery, migration, and access behavior are reproducible.
+      status: planned
+    research_grade:
+      objective: Test whether structured execution blocks outperform unstructured run cards.
+      deliverables:
+      - controlled benchmark
+      - baseline workflow
+      - scope violation measurement
+      - resume-time study
+      - proof quality rubric
+      exit_gate: Claims survive reproducible baseline comparison.
+      status: planned
+    staff_engineer_quality:
+      objective: Demonstrate rollout, governance, evolution, and organizational tradeoffs.
+      deliverables:
+      - migration plan
+      - policy governance
+      - contention analysis
+      - multi-team adoption model
+      - long-term operating cost
+      - degraded-mode strategy
+      exit_gate: A senior reviewer can challenge operation and evolution, not only code.
+      status: planned
+  current_test_evidence:
+  - test: rejects max_branching greater than one
+    type: unit
+    status: implemented
+  - test: prevents second active block
+    type: integration
+    status: implemented
+  - test: runs full start-complete-review lifecycle
+    type: integration
+    status: implemented
+  - test: preserves integer and boolean JSON types
+    type: unit
+    status: implemented
+  - test: end-to-end smoke path
+    type: smoke
+    status: implemented
+  benchmark_design:
+    baseline: unstructured execution run card
+    sample_target: 20
+    primary_metrics:
+    - proof_completion_rate
+    - scope_violation_rate
+    - parallel_branch_violation_rate
+    - resume_time_minutes
+    - review_completeness_rate
+    - duplicated_work_rate
+    falsification_condition: If CGEBS adds material overhead without improving proof, scope control, or resumption,
+      the lifecycle contract must be reduced.
+    status: documented
+  system_metrics:
+  - transition_latency_ms
+  - failed_transition_rate
+  - database_error_rate
+  - json_index_leaves_per_second
+  - json_query_latency_ms
+  human_and_project_metrics:
+  - time_to_resume_minutes
+  - completed_blocks_with_proof_ratio
+  - reviewed_blocks_ratio
+  - scope_violation_count
+  - fallback_action_usage_rate
+  - future_work_reconstruction_avoided
+reliability_security_and_operations:
+  failure_modes:
+  - failure: concurrent_activation
+    current_control: partial unique index rejects one writer
+    residual_risk: caller must handle and surface the rejected transaction
+    status: implemented
+  - failure: process_exit_mid_transition
+    current_control: SQLite transaction rollback
+    residual_risk: operator intent may need to be re-entered
+    status: implemented
+  - failure: false_or_weak_proof
+    current_control: proof field required and recorded
+    residual_risk: truth and quality are not verified
+    status: documented
+  - failure: database_loss
+    current_control: none beyond local filesystem
+    residual_risk: history loss
+    status: planned
+    next_control: export, backup, and restore commands
+  - failure: malicious_or_oversized_input
+    current_control: deterministic structural validation
+    residual_risk: no explicit size limit
+    status: planned
+    next_control: input size and depth limits
+  - failure: openai_unavailable
+    current_control: critique path is optional and isolated
+    residual_risk: advisory output unavailable only
+    status: implemented
+  security_boundaries:
+    protected_assets:
+    - execution history
+    - proof text
+    - imported JSON
+    - OpenAI API key
+    trust_boundaries:
+    - local operator to CLI
+    - untrusted JSON to validator
+    - local runtime to SQLite
+    - optional runtime to OpenAI API
+    implemented_controls:
+    - parameterized SQL
+    - no generated command execution
+    - separate read-only AI path
+    - credentials excluded by gitignore
+    - environment example without secrets
+    planned_controls:
+    - input size limits
+    - database encryption guidance
+    - tamper-evident event signatures
+    - role-based authorization for shared mode
+    - secret scanning in CI
+  operational_readiness:
+    current_mode: single_operator_local
+    logging: CLI output and SQLite event history
+    metrics: not implemented
+    backups: not implemented
+    migrations: implicit create-if-missing schema only
+    recovery: transaction rollback; manual database replacement
+    slo: not yet defined
+  proposed_slos:
+  - name: local_transition_success
+    target: 99.9% valid lifecycle mutations succeed without data loss
+    status: planned
+  - name: history_retrievability
+    target: 100% committed transition events remain queryable
+    status: planned
+portfolio_and_employer_signal:
+  portfolio_positioning: A compact execution runtime demonstrating that the author can turn ambiguous operating
+    principles into enforceable state, invariants, persistence, tests, and an evolvable interface.
+  hidden_competencies:
+  - domain modeling
+  - transactional consistency
+  - state-machine design
+  - local-first architecture
+  - developer experience
+  - data lineage
+  - failure reasoning
+  - AI authority boundaries
+  - scope and tradeoff discipline
+  inspectable_artifacts:
+  - README
+  - RFC
+  - architecture document
+  - ADRs
+  - threat model
+  - failure analysis
+  - evaluation plan
+  - JSON Schema
+  - tests
+  - smoke script
+  - GitHub Actions
+  - segmented YAML specification
+  employer_review_questions:
+  - Why is the single-active invariant enforced at the database layer?
+  - Why use projections and events together?
+  - What would trigger PostgreSQL or distributed execution?
+  - How would proof quality become verifiable without unsafe automation?
+  - What remains correct when OpenAI is unavailable?
+  credible_claims_now:
+  - installable CLI
+  - deterministic validation
+  - transactionally enforced single-active state
+  - auditable lifecycle events
+  - exact typed JSON-path retrieval
+  - optional non-authoritative AI critique
+  - passing unit and smoke tests
+  claims_requiring_future_evidence:
+  - reduced execution drift
+  - faster resumption
+  - improved decision quality
+  - production reliability at multi-user scale
+  resume_bullet_templates:
+  - Designed a constraint-governed execution kernel with database-enforced single-active semantics, proof-gated
+    lifecycle transitions, immutable events, and exact typed JSON retrieval.
+  - Separated deterministic execution authority from optional AI critique so model output could not mutate state
+    or execute commands.
+  next_highest_leverage_work:
+  - run 20 real execution blocks
+  - add import/export and backup
+  - measure resume time and proof completeness
+  - publish one failure-driven case study

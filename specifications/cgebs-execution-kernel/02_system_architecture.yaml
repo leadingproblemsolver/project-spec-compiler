@@ -1,0 +1,87 @@
+# 02 System Architecture
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+system_architecture:
+  architecture_style: modular_monolith
+  deployment_mode: local_first_cli
+  authoritative_path:
+  - execution_block_json
+  - deterministic_validation
+  - execution_kernel_policy
+  - sqlite_transaction
+  - current_block_projection
+  - immutable_event_record
+  secondary_path:
+  - nested_json_document
+  - exact_path_flattening
+  - typed_leaf_index
+  - path_query
+  optional_advisory_path:
+  - validated_execution_block
+  - openai_responses_api
+  - read_only_critique
+  - human_review
+  source_of_truth:
+    current_state: SQLite blocks table
+    transition_history: SQLite events table
+    indexed_json: SQLite json_values table
+    configuration_contract: execution block JSON and schema
+  consistency_model:
+    local_writes: ACID transaction
+    single_active_block: database partial unique index
+    event_and_projection_update: same transaction
+    remote_consistency: not implemented
+  technology:
+    language: Python 3.11+
+    database: SQLite
+    packaging: setuptools via pyproject.toml
+    testing: unittest
+    ci: GitHub Actions
+    external_runtime_dependencies: []
+    optional_external_service: OpenAI Responses API for critique only
+  components:
+  - name: domain_kernel
+    path: src/cgebs/kernel.py
+    responsibility: validation, execution-block model, lifecycle policy
+    status: implemented
+  - name: persistence_store
+    path: src/cgebs/store.py
+    responsibility: transactions, projections, immutable events, JSON index persistence
+    status: implemented
+  - name: json_path_engine
+    path: src/cgebs/json_paths.py
+    responsibility: exact typed JSON leaf path extraction
+    status: implemented
+  - name: cli
+    path: src/cgebs/cli.py
+    responsibility: operator interface and composition root
+    status: implemented
+  - name: openai_critique_adapter
+    path: src/cgebs/openai_client.py
+    responsibility: read-only critique of proof gaps, contradictions, scope risk, and continuation precision
+    status: implemented
+  deferred_architecture:
+  - capability: PostgreSQL
+    trigger: remote concurrent writers or shared team operation
+    status: deferred
+  - capability: message_broker
+    trigger: durable asynchronous workflows with measured backlog or retry needs
+    status: deferred
+  - capability: web_ui
+    trigger: CLI usability becomes the dominant adoption constraint
+    status: deferred
+  - capability: distributed_execution
+    trigger: multiple workers must coordinate one authoritative execution plan
+    status: deferred

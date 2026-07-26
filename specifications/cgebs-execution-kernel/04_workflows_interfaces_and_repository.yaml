@@ -1,0 +1,93 @@
+# 04 Workflows Interfaces And Repository
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+workflows_interfaces_and_repository:
+  primary_operator_workflow:
+  - step: 1
+    command: cgebs validate <block.json>
+    result: deterministic schema and invariant validation
+  - step: 2
+    command: cgebs start <block.json> --db <path>
+    result: active projection and started event
+  - step: 3
+    command: cgebs friction <block.json> --kind <soft|hard> --detail <text> --db <path>
+    result: friction event, fallback action, and optional blocked state
+  - step: 4
+    command: cgebs complete <block.json> --proof <text> --db <path>
+    result: completed state and proof-bearing event
+  - step: 5
+    command: cgebs review <block.json> --learning <text> --next-run <text> --resume-point <text> --db <path>
+    result: reviewed state and exact continuation record
+  - step: 6
+    command: cgebs history --db <path>
+    result: auditable ordered event history
+  json_workflow:
+  - step: 1
+    command: cgebs json-index <document.json> --document-id <id> --db <path>
+    result: typed exact-path index
+  - step: 2
+    command: cgebs json-query <path> --document-id <id> --db <path>
+    result: exact typed value retrieval
+  advisory_workflow:
+  - step: 1
+    command: cgebs critique <block.json> [--model <model>]
+    result: read-only critique printed for human review
+    environment:
+    - OPENAI_API_KEY
+    - OPENAI_MODEL optional
+  install_and_validation:
+    install: python -m pip install -e .
+    test: python -m unittest discover -s tests -v
+    smoke: python scripts/smoke_test.py
+    make_targets:
+    - make install
+    - make test
+    - make smoke
+    - make clean
+  repository_map:
+  - path: src/cgebs/
+    purpose: runtime modules
+  - path: tests/
+    purpose: invariant and integration tests
+  - path: examples/
+    purpose: valid execution and nested JSON fixtures
+  - path: schemas/
+    purpose: portable execution block JSON Schema
+  - path: docs/
+    purpose: RFC, architecture, evaluation, threats, failures, ADRs
+  - path: scripts/
+    purpose: reproducible smoke proof
+  - path: .github/
+    purpose: CI and contribution workflow
+  - path: spec/
+    purpose: canonical segmented YAML project specification
+  github_presentation:
+    default_branch: main
+    recommended_topics:
+    - developer-tools
+    - workflow-engine
+    - state-machine
+    - sqlite
+    - local-first
+    - execution-runtime
+    - data-lineage
+    read_order:
+    - README.md
+    - spec/00_project_identity.yaml
+    - docs/EMPLOYER_GUIDE.md
+    - docs/RFC.md
+    - src/cgebs/kernel.py
+    - src/cgebs/store.py
+    - tests/test_kernel.py

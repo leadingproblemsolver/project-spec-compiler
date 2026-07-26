@@ -1,0 +1,81 @@
+# 06 Reliability Security And Operations
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+reliability_security_and_operations:
+  failure_modes:
+  - failure: concurrent_activation
+    current_control: partial unique index rejects one writer
+    residual_risk: caller must handle and surface the rejected transaction
+    status: implemented
+  - failure: process_exit_mid_transition
+    current_control: SQLite transaction rollback
+    residual_risk: operator intent may need to be re-entered
+    status: implemented
+  - failure: false_or_weak_proof
+    current_control: proof field required and recorded
+    residual_risk: truth and quality are not verified
+    status: documented
+  - failure: database_loss
+    current_control: none beyond local filesystem
+    residual_risk: history loss
+    status: planned
+    next_control: export, backup, and restore commands
+  - failure: malicious_or_oversized_input
+    current_control: deterministic structural validation
+    residual_risk: no explicit size limit
+    status: planned
+    next_control: input size and depth limits
+  - failure: openai_unavailable
+    current_control: critique path is optional and isolated
+    residual_risk: advisory output unavailable only
+    status: implemented
+  security_boundaries:
+    protected_assets:
+    - execution history
+    - proof text
+    - imported JSON
+    - OpenAI API key
+    trust_boundaries:
+    - local operator to CLI
+    - untrusted JSON to validator
+    - local runtime to SQLite
+    - optional runtime to OpenAI API
+    implemented_controls:
+    - parameterized SQL
+    - no generated command execution
+    - separate read-only AI path
+    - credentials excluded by gitignore
+    - environment example without secrets
+    planned_controls:
+    - input size limits
+    - database encryption guidance
+    - tamper-evident event signatures
+    - role-based authorization for shared mode
+    - secret scanning in CI
+  operational_readiness:
+    current_mode: single_operator_local
+    logging: CLI output and SQLite event history
+    metrics: not implemented
+    backups: not implemented
+    migrations: implicit create-if-missing schema only
+    recovery: transaction rollback; manual database replacement
+    slo: not yet defined
+  proposed_slos:
+  - name: local_transition_success
+    target: 99.9% valid lifecycle mutations succeed without data loss
+    status: planned
+  - name: history_retrievability
+    target: 100% committed transition events remain queryable
+    status: planned

@@ -1,0 +1,70 @@
+# 07 Portfolio And Employer Signal
+# Canonical project specification. Update this file when implementation reality changes.
+# Capability statuses: implemented | partially_implemented | documented | planned | deferred.
+
+schema:
+  name: project_engineering_specification
+  version: 1.0.0
+  generated_on: '2026-07-22'
+  timezone: Asia/Qatar
+  status_vocabulary:
+  - implemented
+  - partially_implemented
+  - documented
+  - planned
+  - deferred
+portfolio_and_employer_signal:
+  portfolio_positioning: A compact execution runtime demonstrating that the author can turn ambiguous operating
+    principles into enforceable state, invariants, persistence, tests, and an evolvable interface.
+  hidden_competencies:
+  - domain modeling
+  - transactional consistency
+  - state-machine design
+  - local-first architecture
+  - developer experience
+  - data lineage
+  - failure reasoning
+  - AI authority boundaries
+  - scope and tradeoff discipline
+  inspectable_artifacts:
+  - README
+  - RFC
+  - architecture document
+  - ADRs
+  - threat model
+  - failure analysis
+  - evaluation plan
+  - JSON Schema
+  - tests
+  - smoke script
+  - GitHub Actions
+  - segmented YAML specification
+  employer_review_questions:
+  - Why is the single-active invariant enforced at the database layer?
+  - Why use projections and events together?
+  - What would trigger PostgreSQL or distributed execution?
+  - How would proof quality become verifiable without unsafe automation?
+  - What remains correct when OpenAI is unavailable?
+  credible_claims_now:
+  - installable CLI
+  - deterministic validation
+  - transactionally enforced single-active state
+  - auditable lifecycle events
+  - exact typed JSON-path retrieval
+  - optional non-authoritative AI critique
+  - passing unit and smoke tests
+  claims_requiring_future_evidence:
+  - reduced execution drift
+  - faster resumption
+  - improved decision quality
+  - production reliability at multi-user scale
+  resume_bullet_templates:
+  - Designed a constraint-governed execution kernel with database-enforced single-active semantics, proof-gated
+    lifecycle transitions, immutable events, and exact typed JSON retrieval.
+  - Separated deterministic execution authority from optional AI critique so model output could not mutate state
+    or execute commands.
+  next_highest_leverage_work:
+  - run 20 real execution blocks
+  - add import/export and backup
+  - measure resume time and proof completeness
+  - publish one failure-driven case study
