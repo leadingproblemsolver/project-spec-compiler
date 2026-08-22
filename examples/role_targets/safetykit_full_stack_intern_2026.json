@@ -5,27 +5,24 @@
   "exact_source_excerpt": "Skills: Amazon Web Services (AWS), TypeScript, SQL. SafetyKit seeks interns who love language models, code and ship at very high velocity, act like owners, learn unusually quickly, and may work on AI agents/classifiers for risk, compliance and safety.",
   "requirements": [
     {
-      "capability": "TypeScript / full-stack shipping",
+      "requirement": "Amazon Web Services (AWS)",
+      "evidence": [],
+      "gap": "missing_proof",
+      "next_receipt": "Do not delay the application. If SafetyKit advances it, close this with the smallest role-shaped AWS serverless task reviewed by the team.",
+      "priority": 6
+    },
+    {
+      "requirement": "High-velocity ownership",
       "evidence": [
-        "DriftGuard: TypeScript/Vite reliability layer with 52 release checks + 5 judgment tests",
-        "TraceCrumb: React/Vite product implementation evidence"
+        "Project Spec Compiler CI defect isolated to the test boundary, repaired, rerun green, and merged on 2026-08-22",
+        "Multiple public systems externalized with explicit claim boundaries"
       ],
       "gap": "evidenced",
-      "next_receipt": "Use existing public TypeScript receipts in the application; do not build a new demo first.",
+      "next_receipt": "Formal application -> work trial / interview / employer review.",
       "priority": 2
     },
     {
-      "capability": "SQL / explicit data state",
-      "evidence": [
-        "SignalOps: durable SQLite state and immutable events",
-        "Public systems expose SQLite/PostgreSQL/Supabase data-state work"
-      ],
-      "gap": "evidenced",
-      "next_receipt": "Strengthen only if interview work requires a live SQL task.",
-      "priority": 2
-    },
-    {
-      "capability": "Language-model / agent judgment and safety boundaries",
+      "requirement": "Language-model / agent judgment and safety boundaries",
       "evidence": [
         "DriftGuard: deterministic blockers outrank semantic judgment",
         "RealityLatch: 19/19 deterministic tests across VERIFIED / CONTRADICTED / INSUFFICIENT_EVIDENCE",
@@ -36,30 +33,24 @@
       "priority": 2
     },
     {
-      "capability": "High-velocity ownership",
+      "requirement": "SQL / explicit data state",
       "evidence": [
-        "Project Spec Compiler CI defect isolated to the test boundary, repaired, rerun green, and merged on 2026-08-22",
-        "Multiple public systems externalized with explicit claim boundaries"
+        "SignalOps: durable SQLite state and immutable events",
+        "Public systems expose SQLite/PostgreSQL/Supabase data-state work"
       ],
-      "gap": "evidenced_but_external_judgment_limited",
-      "next_receipt": "Formal application -> work trial / interview / employer review.",
-      "priority": 3
+      "gap": "evidenced",
+      "next_receipt": "Strengthen only if interview work requires a live SQL task.",
+      "priority": 2
     },
     {
-      "capability": "Amazon Web Services (AWS)",
-      "evidence": [],
-      "gap": "missing_proof",
-      "next_receipt": "Do not delay the application. If SafetyKit advances it, close this with the smallest role-shaped AWS serverless task reviewed by the team.",
-      "priority": 10
+      "requirement": "TypeScript / full-stack shipping",
+      "evidence": [
+        "DriftGuard: TypeScript/Vite reliability layer with 52 release checks + 5 judgment tests",
+        "TraceCrumb: React/Vite product implementation evidence"
+      ],
+      "gap": "evidenced",
+      "next_receipt": "Use existing public TypeScript receipts in the application; do not build a new demo first.",
+      "priority": 2
     }
-  ],
-  "next_proof_actions": [
-    {
-      "capability": "Amazon Web Services (AWS)",
-      "gap": "missing_proof",
-      "next_receipt": "Apply first; build AWS proof only if employer progression makes it the active bottleneck.",
-      "priority": 10
-    }
-  ],
-  "claim_boundary": "No production trust-and-safety ownership, SafetyKit integration, moderation-accuracy, customer-adoption, or ROI claim is made."
+  ]
 }
