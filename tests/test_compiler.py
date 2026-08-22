@@ -1,6 +1,6 @@
 from pathlib import Path
 import shutil
-import yaml
+from project_spec._vendor import yaml
 from project_spec.compiler import compile_project
 from project_spec.validator import validate_portfolio, validate_project
 
