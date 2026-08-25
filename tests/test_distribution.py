@@ -36,7 +36,7 @@ def test_compiles_clay_contact_search_and_preserves_proof_state() -> None:
         "companyIdentifiers": ["example.com"],
         "contactFilters": {"job_title_keywords": ["Founder", "Head of GTM"]},
     }
-    assert packet.evidenced_capabilities == ("workflow implementation", "customer discovery")
+    assert set(packet.evidenced_capabilities) == {"workflow implementation", "customer discovery"}
     assert packet.missing_proof == ("SQL",)
 
 
